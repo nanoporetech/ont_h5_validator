@@ -1,0 +1,8 @@
+green
+coverage>=4.0.2
+flake8>=2.5.0
+pydocstyle>=1.0.0
+sphinx==1.6.1
+sphinx-rtd-theme>=0.1.9
+paver>=1.2.4
+requests>=2.19.1
