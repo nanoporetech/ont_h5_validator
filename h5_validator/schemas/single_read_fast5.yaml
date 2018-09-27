@@ -1,0 +1,163 @@
+file:
+    attributes:
+        file_version: f8
+    groups:
+        UniqueGlobalKey:
+            groups:
+                tracking_id:
+                    attributes:
+                        '[a-zA-Z0-9]+':
+                            name_type: regex
+                            count:
+                                minimum_count: 1
+                            datatype: S
+                channel_id:
+                    attributes:
+                        digitisation: f8
+                        offset: f8
+                        range: f8
+                        sampling_rate: f8
+                        channel_number: S
+                context_tags:
+                    attributes:
+                        '[a-zA-Z0-9 ]+':
+                            name_type: regex
+                            count:
+                                minimum_count: 0
+                            datatype: S
+        PreviousReadInfo:
+            attributes:
+                previous_read_id:
+                    datatype: S
+                    count:
+                        minimum_count: 0
+                previous_read_number:
+                    datatype: u4
+                    count:
+                        minimum_count: 0
+        Raw:
+            count:
+                minimum_count: 0
+            groups:
+                Reads:
+                    groups:
+                        'Read_[0-9]+':
+                            name_type: regex
+                            attributes:
+                                start_time: u8
+                                duration: u4
+                                read_number: i4
+                                start_mux: u1
+                                read_id: S
+                                median_before: f8
+                            datasets:
+                                Signal:
+                                    datatype: i2
+        Analyses:
+            count:
+                minimum_count: 0
+            groups:
+                'Segmentation_[0-9]+':
+                    count:
+                        minimum_count: 0
+                    name_type: regex
+                    attributes:
+                        name: S
+                        version: S
+                        time_stamp: S
+                    groups:
+                        Summary:
+                            attributes:
+                                return_status: S
+                            groups:
+                                segmentation:
+                                    count:
+                                        minimum_count: 0
+                                    attributes:
+                                        has_template: u1
+                                        first_sample_template: u8
+                                        duration_template: u8
+                'Basecall_1D_[0-9]+':
+                    count:
+                        minimum_count: 0
+                    name_type: regex
+                    attributes:
+                        name: S
+                        version: S
+                        time_stamp: S
+                    groups:
+                        Summary:
+                            attributes:
+                                return_status: S
+                            groups:
+                                basecall_1d_template:
+                                    count:
+                                        minimum_count: 0
+                                        maximum_count: 1
+                                    attributes:
+                                        num_events: u8
+                                        mean_qscore: f4
+                                        strand_score: f4
+                                        sequence_length: u8
+                                        stay_prob: f4
+                                        step_prob: f4
+                                        skip_prob: f4
+                        BaseCalled_template:
+                            count:
+                                minimum_count: 0
+                                maximum_count: 1
+                            datasets:
+                                Events:
+                                    datatype:
+                                        model_state: S
+                                        move: i1
+                                        weights: f4
+                                Fastq:
+                                    datatype: S
+                                    size: []
+                'EventDetection_[0-9]+':
+                    count:
+                        minimum_count: 0
+                    name_type: regex
+                    attributes:
+                        name: S
+                        version: S
+                        time_stamp: S
+                    groups:
+                        Configuration:
+                            groups:
+                                event_detection:
+                                    attributes:
+                                        long_threshold: f8
+                                        long_window_size: i4
+                                        mode: S
+                                        peak_detector: S
+                                        threshold: f8
+                                        window_size: i4
+                        Reads:
+                            groups:
+                                'Read_[0-9]+':
+                                    name_type: regex
+                                    attributes:
+                                        start_time: u8
+                                        duration: u4
+                                        read_number: i4
+                                        start_mux: u1
+                                        read_id: S
+                                        chunk_index_start: u4
+                                        chunk_index_end: u4
+                                        median_before: f8
+                                        scaling_used: i4
+                                    datasets:
+                                        Events:
+                                            dimensions: 1
+                                            datatype:
+                                                start: u8
+                                                length: u4
+                                                flags:
+                                                  datatype: u2
+                                                  optional: true
+                                                mean: f4
+                                                variance: f4
+                                                channel_config: u1
+                                                distrust_channel_config: u1

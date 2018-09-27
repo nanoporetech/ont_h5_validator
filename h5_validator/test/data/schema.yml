@@ -1,0 +1,113 @@
+file:
+    attributes:
+        file_version: f8
+    groups:
+        UniqueGlobalKey:
+            groups:
+                tracking_id:
+                    attributes:
+                        '[a-zA-Z0-9]+':
+                            name_type: regex
+                            count:
+                                minimum_count: 1
+                            datatype: S
+                channel_id:
+                    attributes:
+                        digitisation: f8
+                        offset: f8
+                        range: f8
+                        sampling_rate: f8
+                        channel_number: S
+                context_tags:
+                    attributes:
+                        '[a-zA-Z0-9]+':
+                            name_type: regex
+                            count:
+                                minimum_count: 0
+                            datatype: S
+        Raw:
+            count:
+                minimum_count: 0
+            groups:
+                Reads:
+                    groups:
+                        'Read_[0-9]+':
+                            name_type: regex
+                            attributes:
+                                start_time: u8
+                                duration: u4
+                                read_number: i4
+                                start_mux: i4
+                                read_id: S
+                            datasets:
+                                Signal:
+                                    datatype: i2
+        Analyses:
+            count:
+                minimum_count: 0
+            groups:
+                'EventDetection_[0]+':
+                    count:
+                        minimum_count: 0
+                    name_type: regex
+                    attributes:
+                        name: S
+                        version: S
+                    groups:
+                        Configuration:
+                            groups:
+                                event_detection:
+                                    attributes:
+                                        long_threshold: f8
+                                        long_window_size: i4
+                                        mode: S
+                                        peak_detector: S
+                                        threshold: f8
+                                        window_size: i4
+                        Reads:
+                            groups:
+                                'Read_[0-9]+':
+                                    name_type: regex
+                                    attributes:
+                                        start_time: u8
+                                        duration: u4
+                                        read_number: i4
+                                        start_mux: i4
+                                        read_id: S
+                                        chunk_index_start: u4
+                                        chunk_index_end: u4
+                                        median_before: f8
+                                        abasic_found: b
+                                        scaling_used: i4
+                                        abasic_event_index:
+                                            datatype: u4
+                                            count:
+                                                minimum_count: 0
+                                        abasic_peak_height:
+                                            datatype: f8
+                                            count:
+                                                minimum_count: 0
+                                        hairpin_found: b
+                                        hairpin_event_index:
+                                            datatype: u4
+                                            count:
+                                                minimum_count: 0
+                                        hairpin_peak_height:
+                                            datatype: f8
+                                            count:
+                                                minimum_count: 0
+                                        hairpin_polyt_level:
+                                            datatype: f8
+                                            count:
+                                                minimum_count: 0
+                                    datasets:
+                                        Events:
+                                            dimensions: 1
+                                            datatype:
+                                                start: u8
+                                                length: u4
+                                                flags:
+                                                  datatype: u4
+                                                  optional: true
+                                                mean: f8
+                                                variance: f8

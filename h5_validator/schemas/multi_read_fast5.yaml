@@ -1,0 +1,132 @@
+file:
+    attributes:
+        file_version: S
+    groups:
+        'read_[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}':
+            name_type: regex
+            attributes:
+                run_id: S
+            count:
+                minimum_count: 0
+            groups:
+                tracking_id:
+                    attributes:
+                        "asic_id_eeprom":
+                            datatype: S
+                        "device_id":
+                            datatype: S
+                        "exp_script_name":
+                            datatype: S
+                        "exp_script_purpose":
+                            datatype: S
+                        "exp_start_time":
+                            datatype: S
+                        "flow_cell_id":
+                            datatype: S
+                        "hostname":
+                            datatype: S
+                        "protocol_run_id":
+                            datatype: S
+                        "protocols_version":
+                            datatype: S
+                        "run_id":
+                            datatype: S
+                        "version":
+                            datatype: S
+                        '[a-zA-Z0-9]+':
+                            name_type: regex
+                            count:
+                                minimum_count: 0
+                            datatype: S
+                context_tags:
+                    attributes:
+                        '[a-zA-Z0-9 ]+':
+                            name_type: regex
+                            count:
+                                minimum_count: 0
+                            datatype: S
+                channel_id:
+                    attributes:
+                        digitisation: f8
+                        offset: f8
+                        range: f8
+                        sampling_rate: f8
+                        channel_number: S
+                Raw:
+                    count:
+                        minimum_count: 0
+                    attributes:
+                        start_time: u8
+                        duration: u4
+                        read_number: i4
+                        start_mux: u1
+                        read_id: S
+                        median_before: f8
+                    datasets:
+                        Signal:
+                            datatype: i2
+                Analyses:
+                    count:
+                        minimum_count: 0
+                    groups:
+                        'Segmentation_[0-9]+':
+                            count:
+                                minimum_count: 0
+                            name_type: regex
+                            attributes:
+                                name: S
+                                version: S
+                                time_stamp: S
+                            groups:
+                                Summary:
+                                    attributes:
+                                        return_status: S
+                                    groups:
+                                        segmentation:
+                                            count:
+                                                minimum_count: 0
+                                            attributes:
+                                                has_template: u1
+                                                first_sample_template: u8
+                                                duration_template: u8
+                        'Basecall_1D_[0-9]+':
+                            count:
+                                minimum_count: 0
+                            name_type: regex
+                            attributes:
+                                name: S
+                                version: S
+                                time_stamp: S
+                            groups:
+                                Summary:
+                                    attributes:
+                                        return_status: S
+                                    groups:
+                                        basecall_1d_template:
+                                            count:
+                                                minimum_count: 0
+                                                maximum_count: 1
+                                            attributes:
+                                                num_events: u8
+                                                mean_qscore: f4
+                                                strand_score: f4
+                                                sequence_length: u8
+                                                stay_prob: f4
+                                                step_prob: f4
+                                                skip_prob: f4
+                                BaseCalled_template:
+                                    count:
+                                        minimum_count: 0
+                                        maximum_count: 1
+                                    datasets:
+                                        Events:
+                                            count:
+                                                minimum_count: 0
+                                                maximum_count: 1
+                                            datatype:
+                                                model_state: S
+                                                move: i1
+                                                weights: f4
+                                        Fastq:
+                                            datatype: S
+                                            size: []
